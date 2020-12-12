@@ -25,7 +25,7 @@ const observeDeviceColorScheme = (function() {
         isObserving = false;
       }
 
-      isFunction(callback) && callback();
+      _triggerCallback(callback);
     }
 
     function observe() {
@@ -63,7 +63,13 @@ const observeDeviceColorScheme = (function() {
     }
   }
 
-  return noop;
+  function _triggerCallback(callback?: Function) {
+    isFunction(callback) && callback();
+  }
+
+  return function observeDeviceColorScheme() {
+    return _triggerCallback;
+  };
 })();
 
 export default observeDeviceColorScheme;
